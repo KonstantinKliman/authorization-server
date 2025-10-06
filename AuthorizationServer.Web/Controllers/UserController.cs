@@ -1,6 +1,7 @@
 using System.Net;
 using AuthorizationServer.BusinessLogic.Interfaces.Services;
 using AuthorizationServer.DataAccess.Dtos;
+using AuthorizationServer.DataAccess.Dtos.Users;
 using AuthorizationServer.Web.Requests.Users;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +22,14 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
     {
-        var dto = request.Adapt<UserDto>();
+        var dto = request.Adapt<CreateUserDto>();
         var result = await _service.CreateUser(dto);
         
-        if (result.IsFailed) return BadRequest(new { message = result.Errors[0].Message });
+        // if (result.IsFailed) return BadRequest(new { message = result.Errors[0].Message });
+        if (result.IsFailed)
+        {
+            var error = result.Errors[0];
+        }
 
         return CreatedAtAction(nameof(GetUserById), new { id = result.Value.Id }, result.Value);
     }
@@ -49,7 +54,7 @@ public class UserController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request, [FromRoute] Guid id)
     {
-        var dto = request.Adapt<UserDto>();
+        var dto = request.Adapt<UpdateUserDto>();
         dto.Id = id;
         
         var result = await _service.UpdateUser(dto);
