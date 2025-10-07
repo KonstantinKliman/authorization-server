@@ -1,15 +1,12 @@
-using System.Reflection;
-using AuthorizationServer.DataAccess.Context.Configurations;
 using AuthorizationServer.DataAccess.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace AuthorizationServer.DataAccess.Context;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
-    public DbSet<User> Users => Set<User>();
-    
     public AppDbContext() { }
     
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
@@ -31,8 +28,8 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfiguration).Assembly);
-        
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.UseOpenIddict();
     }
 }
