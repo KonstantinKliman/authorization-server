@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using AuthorizationServer.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AuthorizationServer.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251008121726_AddRefreshTokensAndAuthorizationCodeTables")]
+    partial class AddRefreshTokensAndAuthorizationCodeTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +45,6 @@ namespace AuthorizationServer.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -60,17 +60,6 @@ namespace AuthorizationServer.DataAccess.Migrations
                         .IsUnique();
 
                     b.ToTable("Applications");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("94e7fd21-7b93-4633-9417-2cd54b0f315c"),
-                            ClientId = "admin-panel",
-                            ClientSecret = "AA1CE2A3A986AC52838A99ED0B587E36:9A46234CD9666671BB30B79C8C583B85D708A9E1D2992FA1B09EE25CD73BD2F1",
-                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Admin Panel",
-                            RedirectUrls = new List<string> { "http://localhost:4200/admin/callback" }
-                        });
                 });
 
             modelBuilder.Entity("AuthorizationServer.DataAccess.Entities.AuthorizationCode", b =>
@@ -175,7 +164,7 @@ namespace AuthorizationServer.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2025, 10, 9, 17, 59, 42, 430, DateTimeKind.Utc).AddTicks(2596));
+                        .HasDefaultValue(new DateTime(2025, 10, 8, 12, 17, 26, 487, DateTimeKind.Utc).AddTicks(4159));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -192,8 +181,8 @@ namespace AuthorizationServer.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("15c25363-9a63-423c-b4b2-2e1acd1107cc"),
-                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Id = new Guid("24eb7d79-e522-4a15-9579-b9c2a94e918a"),
+                            CreatedAt = new DateTime(2025, 10, 8, 12, 17, 26, 487, DateTimeKind.Utc).AddTicks(5042),
                             Name = "Admin",
                             PasswordHash = "AA1CE2A3A986AC52838A99ED0B587E36:9A46234CD9666671BB30B79C8C583B85D708A9E1D2992FA1B09EE25CD73BD2F1"
                         });
@@ -216,14 +205,6 @@ namespace AuthorizationServer.DataAccess.Migrations
                     b.HasIndex("ApplicationId");
 
                     b.ToTable("UserApplications", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("15c25363-9a63-423c-b4b2-2e1acd1107cc"),
-                            ApplicationId = new Guid("94e7fd21-7b93-4633-9417-2cd54b0f315c"),
-                            Roles = new List<string> { "RootAdmin" }
-                        });
                 });
 
             modelBuilder.Entity("AuthorizationServer.DataAccess.Entities.AuthorizationCode", b =>

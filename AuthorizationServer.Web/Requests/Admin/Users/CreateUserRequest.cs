@@ -1,4 +1,4 @@
-namespace AuthorizationServer.Web.Requests.Users;
+namespace AuthorizationServer.Web.Requests.Admin.Users;
 
 public class CreateUserRequest
 {

@@ -9,6 +9,14 @@ namespace AuthorizationServer.DataAccess.Context;
 public class AppDbContext : DbContext
 {
     public DbSet<User> Users => Set<User>();
+
+    public DbSet<Application> Applications => Set<Application>();
+
+    public DbSet<UserApplication> UserApplications => Set<UserApplication>();
+
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
+    public DbSet<AuthorizationCode> AuthorizationCodes => Set<AuthorizationCode>();
     
     public AppDbContext() { }
     
@@ -21,7 +29,7 @@ public class AppDbContext : DbContext
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../AuthorizationServer.Web"))
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.Development.json", optional: false, reloadOnChange: true);
+                .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
             
             var configuration = builder.Build();
             var connectionString = configuration.GetConnectionString("DefaultConnection");

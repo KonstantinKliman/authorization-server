@@ -2,14 +2,14 @@ using System.Net;
 using AuthorizationServer.BusinessLogic.Interfaces.Services;
 using AuthorizationServer.DataAccess.Dtos;
 using AuthorizationServer.DataAccess.Dtos.Users;
-using AuthorizationServer.Web.Requests.Users;
+using AuthorizationServer.Web.Requests.Admin.Users;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuthorizationServer.Web.Controllers;
+namespace AuthorizationServer.Web.Controllers.Admin;
 
 [ApiController]
-[Route("api/v1/users")]
+[Route("api/v1/admin/users")]
 public class UserController : ControllerBase
 {
     private readonly IUserService _service;
